@@ -1,5 +1,5 @@
-python3 -m venv ./myenv
+python3 -m venv ./myvenv
 
-source ./myenv/bin/activate
+source ./myvenv/bin/activate
 
-pip install -r requirments.txt
+pip install -r requirements.txt
