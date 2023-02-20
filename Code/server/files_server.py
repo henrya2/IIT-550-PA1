@@ -10,6 +10,8 @@ from twisted.internet import protocol
 from twisted.protocols import basic
 
 import hashlib
+import argparse
+import time
 
 a_lock = Lock()
 
@@ -112,19 +114,30 @@ class FileServer(basic.LineReceiver):
     def sendData(self, data):
         self.transport.write(data)
 
-factory = protocol.ServerFactory()
-factory.protocol = FileServer
-factory.clients = []
+if __name__ == "__main__":
+    factory = protocol.ServerFactory()
+    factory.protocol = FileServer
+    factory.clients = []
 
-top_service = service.MultiService()
-tcp_service = internet.TCPServer(1025, factory)
-tcp_service.setServiceParent(top_service)
+    port = 1025
+    files_path = "./file_hosted/"
 
-files_path = "./file_hosted/"
-watch(files_path)
-s = internet.TimerService(0.5, watch, files_path)
-s.setServiceParent(top_service)
+    parser = argparse.ArgumentParser(description='Files server.')
+    parser.add_argument('-f', '--files_path', default=files_path)
+    parser.add_argument('-p', '--port', default=port)
 
-top_service.startService()
-reactor.run()
-top_service.stopService()
+    args = parser.parse_args()
+    port = args.port
+    files_path = args.files_path
+
+    top_service = service.MultiService()
+    tcp_service = internet.TCPServer(1025, factory)
+    tcp_service.setServiceParent(top_service)
+
+    watch(files_path)
+    s = internet.TimerService(0.5, watch, files_path)
+    s.setServiceParent(top_service)
+
+    top_service.startService()
+    reactor.run()
+    top_service.stopService()
