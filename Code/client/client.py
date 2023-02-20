@@ -33,18 +33,18 @@ is_test_download = False
 
 test_download_files_list = [
     #"file_128.bin",
-    "file_128k.bin",
-    "file_16k.bin",
     "file_1m.bin",
     #"file_2k.bin",
-    "file_2m.bin",
+    "file_128k.bin",
     "file_32k.bin",
     "file_4k.bin",
     "file_4m.bin",
+    "file_8k.bin",
     #"file_512.bin",
     "file_512k.bin",
+    "file_16k.bin",
     "file_64k.bin",
-    "file_8k.bin"
+    "file_2m.bin"
 ]
 
 test_speed = 0
